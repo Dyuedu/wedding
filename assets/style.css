@@ -116,31 +116,35 @@ body::before {
 
 .date-panel {
     width: 100%;
-    max-width: 340px;
+    max-width: 360px;
     margin: 22px auto 12px;
-    padding: 14px 12px 10px;
+    padding: 18px 14px 14px;
     background: rgba(248, 220, 227, .75);
     border-radius: 18px;
     box-shadow: 0 12px 24px rgba(223, 135, 156, .18);
 }
 
 .date-panel .lunar {
-    margin: 4px 0 0;
+    margin: 8px 0 0;
     text-align: center;
+    font-size: 14px;
 }
 
 .date-card .date-side {
     flex: 1;
     text-align: center;
-    font-size: 14px;
-    color: #333333;
-    font-weight: 400;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #6b4652;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.25;
     white-space: nowrap;
 }
 
 .date-card .date-divider {
     width: 1px;
-    height: 45px;
+    height: 58px;
     background: #a0a0a0;
     opacity: 0.6;
 }
@@ -151,24 +155,26 @@ body::before {
     align-items: center;
     justify-content: center;
     padding: 0 16px;
-    min-width: 100px;
+    min-width: 112px;
 }
 
 .date-card .day-name,
 .date-card .month-name {
-    font-size: 13px;
-    color: #555555;
-    font-weight: 400;
-    letter-spacing: 0.5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: #75525d;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.8px;
 }
 
 .date-card .big-day {
     font-family: 'Wedding', 'Playfair Display', serif;
-    font-size: 56px;
+    font-size: 68px;
     font-weight: 400;
     line-height: 1;
-    color: #000000;
-    margin: 0;
+    color: #2a2023;
+    margin: -2px 0;
 }
 
 /* Typography elements */
@@ -240,7 +246,7 @@ body::before {
 }
 
 .quote {
-    font-family: 'LovelyHome', 'Great Vibes', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 20px;
     font-style: italic;
     line-height: 1.7;
@@ -619,6 +625,78 @@ body::before {
     display: block;
 }
 
+.gift-section {
+    min-height: auto;
+    padding-top: 48px;
+    padding-bottom: 36px;
+    text-align: center;
+}
+
+.gift-flower {
+    width: 152px;
+    height: 40px;
+    margin-bottom: 10px;
+    background: url('decoration/heart03.png') center/contain no-repeat;
+}
+
+.gift-title {
+    font-size: 38px;
+    color: #21304d;
+}
+
+.gift-note {
+    max-width: 340px;
+    margin: 14px auto 28px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #2d2940;
+}
+
+.gift-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.gift-card {
+    width: 100%;
+    padding: 22px 16px 24px;
+    background: rgba(255, 255, 255, .72);
+    border: 2px solid #ff6387;
+    border-radius: 8px;
+}
+
+.gift-card h3 {
+    margin: 0 0 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    color: #17233d;
+}
+
+.gift-qr {
+    width: 150px;
+    aspect-ratio: 1;
+    margin: 0 auto 16px;
+    display: block;
+    object-fit: contain;
+    background: #fff;
+    border: 8px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+}
+
+.gift-card p {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #2d2940;
+}
+
+.gift-card strong {
+    font-weight: 700;
+    color: #17233d;
+}
+
 .divider {
     width: 100%;
     height: 1px;
@@ -670,7 +748,8 @@ body::before {
 .grid-gallery img {
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    object-fit: contain;
+    background: #fff4f7;
     border-radius: 4px;
     opacity: 0;
     transition: opacity 1.35s ease, transform 1.35s cubic-bezier(.22, .8, .2, 1), filter 1.35s ease;
@@ -722,8 +801,9 @@ body::before {
 .final-couple img {
     width: 100%;
     height: 280px;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
+    background: #fff4f7;
     border-radius: 6px;
 }
 
@@ -900,6 +980,117 @@ body::before {
 }
 
 /* Responsive Media Queries */
+@media (min-width: 768px) {
+    .phone-page {
+        width: min(560px, 100vw);
+    }
+
+    .screen {
+        min-height: 820px;
+        padding: 18px 46px 56px;
+    }
+
+    .music-btn {
+        left: calc(50% - 252px);
+    }
+
+    .date-panel {
+        max-width: 420px;
+    }
+
+    .date-card .date-side {
+        font-size: 20px;
+    }
+
+    .date-card .day-name,
+    .date-card .month-name {
+        font-size: 18px;
+    }
+
+    .date-card .big-day {
+        font-size: 76px;
+    }
+
+    .quote {
+        font-size: 22px;
+    }
+
+    .couple-cutout {
+        width: 310px;
+        height: 465px;
+    }
+
+    .two-col {
+        gap: 32px;
+    }
+
+    .portrait-card {
+        height: 235px;
+    }
+
+    .portrait-card.tall {
+        height: 285px;
+    }
+
+    .photo-strip {
+        gap: 16px;
+    }
+
+    .photo-strip img {
+        height: 190px;
+    }
+
+    .photo-strip .mid {
+        height: 250px;
+    }
+
+    .event-box {
+        padding: 30px 20px;
+    }
+
+    .event-box h2 {
+        font-size: 16px;
+    }
+
+    .event-box p,
+    .event-box em {
+        font-size: 15px;
+    }
+
+    .event-box strong {
+        font-size: 24px;
+    }
+
+    .map-card {
+        height: 280px;
+    }
+
+    .gift-note {
+        max-width: 460px;
+        font-size: 17px;
+    }
+
+    .gift-card {
+        padding: 26px 24px 28px;
+    }
+
+    .gift-qr {
+        width: 178px;
+    }
+
+    .grid-gallery {
+        gap: 12px;
+    }
+
+    .grid-gallery img {
+        height: 270px;
+    }
+
+    .final-couple img {
+        height: 360px;
+    }
+}
+
 @media (max-width: 430px) {
     .phone-page {
         width: 100vw;
@@ -916,20 +1107,25 @@ body::before {
     }
 
     .date-card {
-        max-width: 290px;
+        max-width: 310px;
     }
 
     .date-card .date-side {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .date-card .big-day {
-        font-size: 50px;
+        font-size: 62px;
+    }
+
+    .date-card .day-name,
+    .date-card .month-name {
+        font-size: 15px;
     }
 
     .date-card .date-center {
         padding: 0 12px;
-        min-width: 90px;
+        min-width: 100px;
     }
 
     .grid-gallery img {
