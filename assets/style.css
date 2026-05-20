@@ -250,6 +250,32 @@ body::before {
     margin: 12px 0 34px;
 }
 
+.guest-invite {
+    width: 100%;
+    text-align: center;
+    margin: 8px 0 18px;
+    color: #6f5961;
+}
+
+.guest-invite span {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.guest-invite strong {
+    display: block;
+    margin-top: 8px;
+    font-family: 'LovelyHome', 'Great Vibes', cursive;
+    font-size: clamp(22px, 6.2vw, 28px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: #2a2023;
+    word-break: break-word;
+}
+
 /* Two columns content layout */
 .two-col {
     width: 100%;
@@ -769,6 +795,70 @@ body::before {
         transform: scale(1.08);
         box-shadow: 0 0 0 8px rgba(228, 151, 170, .22);
     }
+}
+
+.link-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.link-maker {
+    width: min(420px, 100%);
+    padding: 28px 22px;
+    background: rgba(255, 247, 249, .92);
+    border: 1px solid rgba(223, 135, 156, .28);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(157, 82, 102, .18);
+}
+
+.link-maker .script {
+    margin-bottom: 26px;
+    font-size: 42px;
+}
+
+.link-maker label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: #4b3141;
+}
+
+.link-maker input,
+.link-maker textarea {
+    width: 100%;
+    border: 1px solid #f0b7c5;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font: 14px Inter, sans-serif;
+    color: var(--text);
+    background: #fff;
+    outline: none;
+}
+
+.link-maker textarea {
+    min-height: 96px;
+    margin-top: 14px;
+    resize: vertical;
+}
+
+.link-maker button {
+    width: 100%;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    background: #d87994;
+    color: #fff;
+    font: 600 14px Inter, sans-serif;
+    cursor: pointer;
+}
+
+.link-maker button:last-child {
+    background: #4b3141;
 }
 
 /* Decorative Petals */

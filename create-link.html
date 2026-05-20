@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tạo link thiệp mời</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <main class="link-page">
+    <section class="link-maker">
+      <p class="script">Tạo link thiệp mời</p>
+      <label for="guestInput">Tên khách mời</label>
+      <input id="guestInput" type="text" placeholder="Ví dụ: Anh Nguyễn Văn A" autocomplete="off" />
+      <button id="makeLink" type="button">Tạo link</button>
+      <textarea id="guestLink" readonly placeholder="Link sẽ hiện ở đây"></textarea>
+      <button id="copyLink" type="button">Copy link</button>
+    </section>
+  </main>
+
+  <script>
+    const input = document.getElementById('guestInput');
+    const output = document.getElementById('guestLink');
+    const makeButton = document.getElementById('makeLink');
+    const copyButton = document.getElementById('copyLink');
+    const invitationUrl = 'https://thanhyen.io.vn/';
+
+    function makeGuestLink() {
+      const guest = input.value.trim();
+      const url = new URL(invitationUrl);
+      if (guest) url.searchParams.set('guest', guest);
+      output.value = url.href;
+    }
+
+    makeButton.addEventListener('click', makeGuestLink);
+    input.addEventListener('input', makeGuestLink);
+    copyButton.addEventListener('click', async () => {
+      if (!output.value) makeGuestLink();
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(output.value);
+      } else {
+        output.select();
+        document.execCommand('copy');
+      }
+      copyButton.textContent = 'Đã copy';
+      setTimeout(() => {
+        copyButton.textContent = 'Copy link';
+      }, 1400);
+    });
+  </script>
+</body>
+</html>

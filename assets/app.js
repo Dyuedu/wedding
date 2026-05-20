@@ -11,6 +11,14 @@ bindingTargets.forEach((el) => {
   }
 });
 
+const guestName = new URLSearchParams(window.location.search).get('guest');
+const guestNameTargets = document.querySelectorAll('[data-guest-name]');
+if (guestName && guestName.trim()) {
+  guestNameTargets.forEach((el) => {
+    el.textContent = guestName.trim();
+  });
+}
+
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
