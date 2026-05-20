@@ -1187,8 +1187,8 @@ body::before {
   <div class="petal-layer" aria-hidden="true"></div>
 
   <main class="phone-page">
-    <button class="music-btn" id="musicBtn" aria-label="Bật/tắt nhạc">♫</button>
-    <audio id="bgMusic" loop>
+    <button class="music-btn playing" id="musicBtn" aria-label="Bật/tắt nhạc">♪</button>
+    <audio id="bgMusic" loop autoplay>
       <source src="./bgmusic/wedding.mp3" type="audio/mpeg">
     </audio>
 
@@ -1434,11 +1434,33 @@ for(let i=0;i<16;i++) setTimeout(makePetal,i*170);
 const musicBtn=document.getElementById('musicBtn');
 const bgMusic=document.getElementById('bgMusic');
 if (musicBtn && bgMusic) {
+  const setMusicState = () => {
+    const isPlaying = !bgMusic.paused;
+    musicBtn.classList.toggle('playing', isPlaying);
+    musicBtn.textContent = isPlaying ? '♪' : '♫';
+  };
+
+  const tryPlayMusic = async () => {
+    try {
+      await bgMusic.play();
+      setMusicState();
+    } catch (e) {
+      setMusicState();
+    }
+  };
+
+  bgMusic.addEventListener('play', setMusicState);
+  bgMusic.addEventListener('pause', setMusicState);
+  window.addEventListener('load', tryPlayMusic);
+  document.addEventListener('click', tryPlayMusic, { once: true });
+  document.addEventListener('touchstart', tryPlayMusic, { once: true });
+
   musicBtn.addEventListener('click', async ()=>{
     try{
-      if(bgMusic.paused){ await bgMusic.play(); musicBtn.classList.add('playing'); musicBtn.textContent='♪'; }
-      else{ bgMusic.pause(); musicBtn.classList.remove('playing'); musicBtn.textContent='♫'; }
-    }catch(e){ musicBtn.textContent='♪'; musicBtn.classList.toggle('playing'); }
+      if(bgMusic.paused){ await bgMusic.play(); }
+      else{ bgMusic.pause(); }
+      setMusicState();
+    }catch(e){ setMusicState(); }
   });
 }
 
