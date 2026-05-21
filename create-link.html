@@ -62,7 +62,12 @@
       color: #4b3141;
     }
 
+    .link-maker label:not(:first-of-type) {
+      margin-top: 14px;
+    }
+
     .link-maker input,
+    .link-maker select,
     .link-maker textarea {
       width: 100%;
       border: 1px solid #f0b7c5;
@@ -101,6 +106,11 @@
   <main class="link-page">
     <section class="link-maker">
       <p class="script">Tạo link thiệp mời</p>
+      <label for="placeSelect">Nhà mời</label>
+      <select id="placeSelect">
+        <option value="nhatrai">Nhà trai</option>
+        <option value="nhagai">Nhà gái</option>
+      </select>
       <label for="guestInput">Tên khách mời</label>
       <input id="guestInput" type="text" placeholder="Ví dụ: Anh Nguyễn Văn A" autocomplete="off" />
       <button id="makeLink" type="button">Tạo link</button>
@@ -111,6 +121,7 @@
 
   <script>
     const input = document.getElementById('guestInput');
+    const placeSelect = document.getElementById('placeSelect');
     const output = document.getElementById('guestLink');
     const makeButton = document.getElementById('makeLink');
     const copyButton = document.getElementById('copyLink');
@@ -119,12 +130,14 @@
     function makeGuestLink() {
       const guest = input.value.trim();
       const url = new URL(invitationUrl);
+      url.searchParams.set('p', placeSelect.value);
       if (guest) url.searchParams.set('guest', guest);
       output.value = url.href;
     }
 
     makeButton.addEventListener('click', makeGuestLink);
     input.addEventListener('input', makeGuestLink);
+    placeSelect.addEventListener('change', makeGuestLink);
     copyButton.addEventListener('click', async () => {
       if (!output.value) makeGuestLink();
       if (navigator.clipboard) {

@@ -488,6 +488,13 @@ body::before {
     font-size: 13px;
 }
 
+.event-box .event-location {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0;
+}
+
 .calendar-title {
     font-family: 'Playfair Display', serif;
     text-align: center;
@@ -1280,9 +1287,10 @@ body::before {
     <section class="screen ceremony reveal">
       <div class="event-box">
         <h2>TIỆC MỪNG LỄ THÀNH HÔN</h2>
-        <p>16 giờ 30' · Thứ 7</p>
-        <strong>06 tháng 06 năm 2026</strong>
-        <em>(Tức ngày 21 tháng 04 năm Bính Ngọ)</em>
+        <p data-event-time>16 giờ 30' · Thứ 7</p>
+        <strong data-event-date>06 tháng 06 năm 2026</strong>
+        <em data-event-lunar>(Tức ngày 21 tháng 04 năm Bính Ngọ)</em>
+        <strong class="event-location" data-event-location>Tại tư gia nhà trai</strong>
       </div>
       <p class="calendar-title">SAVE THE DATE<br><span>THÁNG 6 - 2026</span></p>
       <div class="calendar">
@@ -1406,6 +1414,27 @@ const guestNameTargets = document.querySelectorAll('[data-guest-name]');
 if (guestName && guestName.trim()) {
   guestNameTargets.forEach((el) => {
     el.textContent = guestName.trim();
+  });
+}
+
+const pageType = new URLSearchParams(window.location.search).get('p');
+if (pageType === 'nhagai') {
+  const eventDetails = {
+    time: "7 giờ 30' · Chủ Nhật",
+    date: '07 tháng 06 năm 2026',
+    lunar: '(Tức ngày 22 tháng 04 năm Bính Ngọ)',
+    location: 'Tại tư gia nhà gái'
+  };
+
+  const eventBindings = {
+    time: document.querySelector('[data-event-time]'),
+    date: document.querySelector('[data-event-date]'),
+    lunar: document.querySelector('[data-event-lunar]'),
+    location: document.querySelector('[data-event-location]')
+  };
+
+  Object.entries(eventDetails).forEach(([key, value]) => {
+    if (eventBindings[key]) eventBindings[key].textContent = value;
   });
 }
 
