@@ -85,6 +85,12 @@
       resize: vertical;
     }
 
+    .time-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
     .link-maker button {
       width: 100%;
       border: 0;
@@ -113,6 +119,13 @@
       </select>
       <label for="guestInput">Tên khách mời</label>
       <input id="guestInput" type="text" placeholder="Ví dụ: Anh Nguyễn Văn A" autocomplete="off" />
+      <label for="eventHourInput">Thời gian tiệc</label>
+      <div class="time-fields">
+        <input id="eventHourInput" type="number" min="0" max="23" placeholder="Giờ" autocomplete="off" />
+        <input id="eventMinuteInput" type="number" min="0" max="59" placeholder="Phút" autocomplete="off" />
+      </div>
+      <label for="eventDayInput">Ngày tiệc</label>
+      <input id="eventDayInput" type="number" min="6" max="7" placeholder="06 hoặc 07" autocomplete="off" />
       <button id="makeLink" type="button">Tạo link</button>
       <textarea id="guestLink" readonly placeholder="Link sẽ hiện ở đây"></textarea>
       <button id="copyLink" type="button">Copy link</button>
@@ -122,6 +135,9 @@
   <script>
     const input = document.getElementById('guestInput');
     const placeSelect = document.getElementById('placeSelect');
+    const eventHourInput = document.getElementById('eventHourInput');
+    const eventMinuteInput = document.getElementById('eventMinuteInput');
+    const eventDayInput = document.getElementById('eventDayInput');
     const output = document.getElementById('guestLink');
     const makeButton = document.getElementById('makeLink');
     const copyButton = document.getElementById('copyLink');
@@ -132,12 +148,21 @@
       const url = new URL(invitationUrl);
       url.searchParams.set('p', placeSelect.value);
       if (guest) url.searchParams.set('guest', guest);
+      const eventHour = eventHourInput.value.trim();
+      const eventMinute = eventMinuteInput.value.trim();
+      const eventDay = eventDayInput.value.trim();
+      if (eventHour) url.searchParams.set('eventHour', eventHour);
+      if (eventMinute) url.searchParams.set('eventMinute', eventMinute.padStart(2, '0'));
+      if (eventDay) url.searchParams.set('eventDay', eventDay.padStart(2, '0'));
       output.value = url.href;
     }
 
     makeButton.addEventListener('click', makeGuestLink);
     input.addEventListener('input', makeGuestLink);
     placeSelect.addEventListener('change', makeGuestLink);
+    eventHourInput.addEventListener('input', makeGuestLink);
+    eventMinuteInput.addEventListener('input', makeGuestLink);
+    eventDayInput.addEventListener('input', makeGuestLink);
     copyButton.addEventListener('click', async () => {
       if (!output.value) makeGuestLink();
       if (navigator.clipboard) {

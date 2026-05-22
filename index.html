@@ -1409,7 +1409,8 @@ bindingTargets.forEach((el) => {
   }
 });
 
-const guestName = new URLSearchParams(window.location.search).get('guest');
+const searchParams = new URLSearchParams(window.location.search);
+const guestName = searchParams.get('guest');
 const guestNameTargets = document.querySelectorAll('[data-guest-name]');
 if (guestName && guestName.trim()) {
   guestNameTargets.forEach((el) => {
@@ -1417,26 +1418,76 @@ if (guestName && guestName.trim()) {
   });
 }
 
-const pageType = new URLSearchParams(window.location.search).get('p');
-if (pageType === 'nhagai') {
-  const eventDetails = {
-    time: "7 giờ 30' · Chủ Nhật",
-    date: '07 tháng 06 năm 2026',
-    lunar: '(Tức ngày 22 tháng 04 năm Bính Ngọ)',
-    location: 'Tại tư gia nhà gái'
-  };
+const eventDetails = {
+  time: "16 giờ 30' · Thứ 7",
+  date: '06 tháng 06 năm 2026',
+  lunar: '(Tức ngày 21 tháng 04 năm Bính Ngọ)',
+  location: 'Tại tư gia nhà trai'
+};
 
-  const eventBindings = {
-    time: document.querySelector('[data-event-time]'),
-    date: document.querySelector('[data-event-date]'),
-    lunar: document.querySelector('[data-event-lunar]'),
-    location: document.querySelector('[data-event-location]')
-  };
+function getJune2026LunarText(day) {
+  const solarDay = Number.parseInt(day, 10);
+  if (!Number.isInteger(solarDay) || solarDay < 1 || solarDay > 30) return '';
 
-  Object.entries(eventDetails).forEach(([key, value]) => {
-    if (eventBindings[key]) eventBindings[key].textContent = value;
-  });
+  const lunarDay = solarDay <= 14 ? solarDay + 15 : solarDay - 14;
+  const lunarMonth = solarDay <= 14 ? '04' : '05';
+  return `(Tức ngày ${String(lunarDay).padStart(2, '0')} tháng ${lunarMonth} năm Bính Ngọ)`;
 }
+
+function getJune2026WeekdayText(day) {
+  const solarDay = Number.parseInt(day, 10);
+  if (solarDay === 6) return 'Thứ 7';
+  if (solarDay === 7) return 'Chủ Nhật';
+  return '';
+}
+
+const pageType = searchParams.get('p');
+if (pageType === 'nhagai') {
+  eventDetails.time = "7 giờ 30' · Chủ Nhật";
+  eventDetails.date = '07 tháng 06 năm 2026';
+  eventDetails.lunar = '(Tức ngày 22 tháng 04 năm Bính Ngọ)';
+  eventDetails.location = 'Tại tư gia nhà gái';
+}
+
+const eventTime = searchParams.get('eventTime');
+const eventHour = searchParams.get('eventHour');
+const eventMinute = searchParams.get('eventMinute');
+const eventDay = searchParams.get('eventDay');
+const eventWeekday = searchParams.get('eventWeekday');
+if (eventTime || eventHour || eventMinute || eventWeekday || eventDay) {
+  const currentTimeParts = eventDetails.time.split(' · ');
+  let timeText = eventTime && eventTime.trim() ? eventTime.trim() : currentTimeParts[0];
+  if (eventHour || eventMinute) {
+    const currentTimeMatch = timeText.match(/(\d{1,2})\s*giờ\s*(\d{1,2})?/i);
+    const hourText = eventHour && eventHour.trim() ? eventHour.trim() : currentTimeMatch?.[1];
+    const minuteText = eventMinute && eventMinute.trim() ? eventMinute.trim() : currentTimeMatch?.[2];
+    const hour = Number.parseInt(hourText, 10);
+    const minute = Number.parseInt(minuteText, 10);
+    if (Number.isInteger(hour) && hour >= 0 && hour <= 23) {
+      timeText = `${hour} giờ ${Number.isInteger(minute) && minute >= 0 && minute <= 59 ? String(minute).padStart(2, '0') : '00'}'`;
+    }
+  }
+  const autoWeekdayText = eventDay && eventDay.trim() ? getJune2026WeekdayText(eventDay) : '';
+  const weekdayText = autoWeekdayText || (eventWeekday && eventWeekday.trim() ? eventWeekday.trim() : currentTimeParts[1]);
+  eventDetails.time = [timeText, weekdayText].filter(Boolean).join(' · ');
+}
+
+if (eventDay && eventDay.trim()) {
+  eventDetails.date = `${eventDay.trim().padStart(2, '0')} tháng 06 năm 2026`;
+  const eventLunar = getJune2026LunarText(eventDay);
+  if (eventLunar) eventDetails.lunar = eventLunar;
+}
+
+const eventBindings = {
+  time: document.querySelector('[data-event-time]'),
+  date: document.querySelector('[data-event-date]'),
+  lunar: document.querySelector('[data-event-lunar]'),
+  location: document.querySelector('[data-event-location]')
+};
+
+Object.entries(eventDetails).forEach(([key, value]) => {
+  if (eventBindings[key]) eventBindings[key].textContent = value;
+});
 
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
